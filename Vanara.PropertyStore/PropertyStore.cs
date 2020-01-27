@@ -11,28 +11,103 @@ using System.Threading.Tasks;
 
 namespace System
 {
+	/// <summary>
+	/// Encapsulates a method that has two parameters, the last being an <c>out</c> parameter, and returns a value of the type specified by the TResult parameter.
+	/// </summary>
+	/// <typeparam name="T1">The type of the first parameter of the method that this delegate encapsulates. This type parameter is contravariant. That is, you can use either the type you specified or any type that is less derived.</typeparam>
+	/// <typeparam name="TOut">The type of the out parameter.</typeparam>
+	/// <typeparam name="TRet">The type of the return value of the method that this delegate encapsulates. This type parameter is covariant. That is, you can use either the type you specified or any type that is more derived.</typeparam>
+	/// <param name="arg1">The first parameter of the method that this delegate encapsulates.</param>
+	/// <param name="argOut">The out argument of the method that this delagate encapsulates.</param>
+	/// <returns>The return value of the method that this delegate encapsulates.</returns>
 	public delegate TRet FuncOut<in T1, TOut, out TRet>(T1 arg1, out TOut argOut);
 
+	/// <summary>
+	/// Encapsulates a method that has three parameters, the last being an <c>out</c> parameter, and returns a value of the type specified by the TResult parameter.
+	/// </summary>
+	/// <typeparam name="T1">The type of the first parameter of the method that this delegate encapsulates. This type parameter is contravariant. That is, you can use either the type you specified or any type that is less derived.</typeparam>
+	/// <typeparam name="T2">The type of the second parameter of the method that this delegate encapsulates. This type parameter is contravariant. That is, you can use either the type you specified or any type that is less derived.</typeparam>
+	/// <typeparam name="TOut">The type of the out parameter.</typeparam>
+	/// <typeparam name="TRet">The type of the return value of the method that this delegate encapsulates. This type parameter is covariant. That is, you can use either the type you specified or any type that is more derived.</typeparam>
+	/// <param name="arg1">The first parameter of the method that this delegate encapsulates.</param>
+	/// <param name="arg2">The second parameter of the method that this delegate encapsulates.</param>
+	/// <param name="argOut">The out argument of the method that this delagate encapsulates.</param>
+	/// <returns>The return value of the method that this delegate encapsulates.</returns>
 	public delegate TRet FuncOut<in T1, in T2, TOut, out TRet>(T1 arg1, T2 arg2, out TOut argOut);
 
+	/// <summary>
+	/// Encapsulates a method that has four parameters, the last being an <c>out</c> parameter, and returns a value of the type specified by the TResult parameter.
+	/// </summary>
+	/// <typeparam name="T1">The type of the first parameter of the method that this delegate encapsulates. This type parameter is contravariant. That is, you can use either the type you specified or any type that is less derived.</typeparam>
+	/// <typeparam name="T2">The type of the second parameter of the method that this delegate encapsulates. This type parameter is contravariant. That is, you can use either the type you specified or any type that is less derived.</typeparam>
+	/// <typeparam name="T3">The type of the third parameter of the method that this delegate encapsulates. This type parameter is contravariant. That is, you can use either the type you specified or any type that is less derived.</typeparam>
+	/// <typeparam name="TOut">The type of the out parameter.</typeparam>
+	/// <typeparam name="TRet">The type of the return value of the method that this delegate encapsulates. This type parameter is covariant. That is, you can use either the type you specified or any type that is more derived.</typeparam>
+	/// <param name="arg1">The first parameter of the method that this delegate encapsulates.</param>
+	/// <param name="arg2">The second parameter of the method that this delegate encapsulates.</param>
+	/// <param name="arg3">The third parameter of the method that this delegate encapsulates.</param>
+	/// <param name="argOut">The out argument of the method that this delagate encapsulates.</param>
+	/// <returns>The return value of the method that this delegate encapsulates.</returns>
 	public delegate TRet FuncOut<in T1, in T2, in T3, TOut, out TRet>(T1 arg1, T2 arg2, T3 arg3, out TOut argOut);
 
+	/// <summary>
+	/// Encapsulates a method that has five parameters, the last being an <c>out</c> parameter, and returns a value of the type specified by the TResult parameter.
+	/// </summary>
+	/// <typeparam name="T1">The type of the first parameter of the method that this delegate encapsulates. This type parameter is contravariant. That is, you can use either the type you specified or any type that is less derived.</typeparam>
+	/// <typeparam name="T2">The type of the second parameter of the method that this delegate encapsulates. This type parameter is contravariant. That is, you can use either the type you specified or any type that is less derived.</typeparam>
+	/// <typeparam name="T3">The type of the third parameter of the method that this delegate encapsulates. This type parameter is contravariant. That is, you can use either the type you specified or any type that is less derived.</typeparam>
+	/// <typeparam name="T4">The type of the fourth parameter of the method that this delegate encapsulates. This type parameter is contravariant. That is, you can use either the type you specified or any type that is less derived.</typeparam>
+	/// <typeparam name="TOut">The type of the out parameter.</typeparam>
+	/// <typeparam name="TRet">The type of the return value of the method that this delegate encapsulates. This type parameter is covariant. That is, you can use either the type you specified or any type that is more derived.</typeparam>
+	/// <param name="arg1">The first parameter of the method that this delegate encapsulates.</param>
+	/// <param name="arg2">The second parameter of the method that this delegate encapsulates.</param>
+	/// <param name="arg3">The third parameter of the method that this delegate encapsulates.</param>
+	/// <param name="arg4">The fourth parameter of the method that this delegate encapsulates.</param>
+	/// <param name="argOut">The out argument of the method that this delagate encapsulates.</param>
+	/// <returns>The return value of the method that this delegate encapsulates.</returns>
 	public delegate TRet FuncOut<in T1, in T2, in T3, in T4, TOut, out TRet>(T1 arg1, T2 arg2, T3 arg3, T4 arg4, out TOut argOut);
 
+	/// <summary>
+	/// Encapsulates a method that has six parameters, the last being an <c>out</c> parameter, and returns a value of the type specified by the TResult parameter.
+	/// </summary>
+	/// <typeparam name="T1">The type of the first parameter of the method that this delegate encapsulates. This type parameter is contravariant. That is, you can use either the type you specified or any type that is less derived.</typeparam>
+	/// <typeparam name="T2">The type of the second parameter of the method that this delegate encapsulates. This type parameter is contravariant. That is, you can use either the type you specified or any type that is less derived.</typeparam>
+	/// <typeparam name="T3">The type of the third parameter of the method that this delegate encapsulates. This type parameter is contravariant. That is, you can use either the type you specified or any type that is less derived.</typeparam>
+	/// <typeparam name="T4">The type of the fourth parameter of the method that this delegate encapsulates. This type parameter is contravariant. That is, you can use either the type you specified or any type that is less derived.</typeparam>
+	/// <typeparam name="T5">The type of the fifth parameter of the method that this delegate encapsulates. This type parameter is contravariant. That is, you can use either the type you specified or any type that is less derived.</typeparam>
+	/// <typeparam name="TOut">The type of the out parameter.</typeparam>
+	/// <typeparam name="TRet">The type of the return value of the method that this delegate encapsulates. This type parameter is covariant. That is, you can use either the type you specified or any type that is more derived.</typeparam>
+	/// <param name="arg1">The first parameter of the method that this delegate encapsulates.</param>
+	/// <param name="arg2">The second parameter of the method that this delegate encapsulates.</param>
+	/// <param name="arg3">The third parameter of the method that this delegate encapsulates.</param>
+	/// <param name="arg4">The fourth parameter of the method that this delegate encapsulates.</param>
+	/// <param name="arg5">The fifth parameter of the method that this delegate encapsulates.</param>
+	/// <param name="argOut">The out argument of the method that this delagate encapsulates.</param>
+	/// <returns>The return value of the method that this delegate encapsulates.</returns>
 	public delegate TRet FuncOut<in T1, in T2, in T3, in T4, in T5, TOut, out TRet>(T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, out TOut argOut);
 }
 
 namespace Vanara.PropertyStore
 {
+	/// <summary>A property store (set) implemetnation that supports getting and setting passthrough and staged commits.</summary>
+	/// <seealso cref="Vanara.PropertyStore.IPropertyStore" />
 	public class PropertyStore : IPropertyStore
 	{
+		/// <summary>The set of descriptors.</summary>
 		protected PropertyDescriptorSet descriptors = new PropertyDescriptorSet();
+		/// <summary>Stores the names of any items that are dirty and must be set on <see cref="Commit"/>.</summary>
 		protected HashSet<string> dirty = new HashSet<string>();
+		/// <summary>Stores the current values of the properties.</summary>
 		protected Dictionary<string, object> properties = new Dictionary<string, object>();
 		private readonly FuncOut<string, object, bool> getFunc;
 		private readonly Action<string> resetFunc;
 		private readonly Action<string, object> setFunc;
 
+		/// <summary>Initializes a new instance of the <see cref="PropertyStore"/> class.</summary>
+		/// <param name="physicalGetMethod">The physical get method.</param>
+		/// <param name="physicalSetMethod">The physical set method.</param>
+		/// <param name="physicalResetMethod">The physical reset method.</param>
+		/// <param name="passthrough">if set to <see langword="true" />, does not perform a staged commit. In other words, all sets are immediately committed.</param>
 		public PropertyStore(FuncOut<string, object, bool> physicalGetMethod, Action<string, object> physicalSetMethod, Action<string> physicalResetMethod, bool passthrough = false)
 		{
 			ImmediateCommitModel = passthrough;
@@ -147,8 +222,17 @@ namespace Vanara.PropertyStore
 		/// <returns>An enumerator that can be used to iterate through the collection.</returns>
 		public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => properties.GetEnumerator();
 
+		/// <summary>Gets the property value.</summary>
+		/// <param name="propertyName">Name of the property.</param>
+		/// <param name="defaultValue">The default value.</param>
+		/// <returns>The property value.</returns>
 		public object GetPropertyValue([CallerMemberName] string propertyName = "", object defaultValue = default) => TryGetValue(propertyName, out var value) ? value : defaultValue;
 
+		/// <summary>Gets the property value.</summary>
+		/// <typeparam name="T">The type of the property.</typeparam>
+		/// <param name="propertyName">Name of the property.</param>
+		/// <param name="defaultValue">The default value.</param>
+		/// <returns>The property value, cast to <typeparamref name="T"/>.</returns>
 		public T GetPropertyValue<T>([CallerMemberName] string propertyName = "", T defaultValue = default) => (T)GetPropertyValue(propertyName, (object)defaultValue);
 
 		/// <summary>Loads the values of the current property store from a stream.</summary>

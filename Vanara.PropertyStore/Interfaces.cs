@@ -12,11 +12,86 @@ using System.Threading.Tasks;
 
 namespace Vanara.PropertyStore
 {
-	public enum DrawControl { Default, BooleanCheckMark, BooleanToggle, IconList, MultiLineText, MultiValueText, PercentBar, ProgressBar, Rating, StaticText };
+	/// <summary>Control hints for drawing the property.</summary>
+	public enum DrawControl
+	{
+		/// <summary>
+		/// Default. Uses the default control, based upon the attribute. The default type is "String" (multi-value) and the default control
+		/// is "MultiValueText". Any other type results in using the "StaticText" control.
+		/// </summary>
+		Default,
 
-	public enum EditControl { Default, Calendar, CheckBoxDropList, DropList, IconList, MultiLineText, MultiValueText, Rating, Text };
+		/// <summary>Uses a check mark control.</summary>
+		BooleanCheckMark,
 
-	public enum FilterControl { Default, Calendar, Rating };
+		/// <summary>Uses a toggle control.</summary>
+		BooleanToggle,
+
+		/// <summary>An enumeration of icons.</summary>
+		IconList,
+
+		/// <summary>Uses the multi-line text control.</summary>
+		MultiLineText,
+
+		/// <summary>Uses the multi-value text control.</summary>
+		MultiValueText,
+
+		/// <summary>Uses the percent bar control.</summary>
+		PercentBar,
+
+		/// <summary>Uses the progress bar control.</summary>
+		ProgressBar,
+
+		/// <summary>Uses the 5-star rating control.</summary>
+		Rating,
+
+		/// <summary>Uses a static text control to display the property value.</summary>
+		StaticText
+	}
+
+	/// <summary>Control hints for editing the property.</summary>
+	public enum EditControl
+	{
+		/// <summary>Uses the default control, based upon the attribute.</summary>
+		Default,
+
+		/// <summary>Uses the calendar control.</summary>
+		Calendar,
+
+		/// <summary>Uses the list control with checkboxes.</summary>
+		CheckBoxDropList,
+
+		/// <summary>Uses the dropdown list control.</summary>
+		DropList,
+
+		/// <summary>An enumeration of icons.</summary>
+		IconList,
+
+		/// <summary>Uses the multi-line text control.</summary>
+		MultiLineText,
+
+		/// <summary>Uses the multi-value text control.</summary>
+		MultiValueText,
+
+		/// <summary>Uses the 5-star rating control.</summary>
+		Rating,
+
+		/// <summary>Uses the text edit control.</summary>
+		Text
+	}
+
+	/// <summary>Control hints for what control to use in the header filter menu.</summary>
+	public enum FilterControl
+	{
+		/// <summary>Uses the default control, based upon the attribute.</summary>
+		Default,
+
+		/// <summary>Uses the calendar control.</summary>
+		Calendar,
+
+		/// <summary>Uses the 5-star rating control.</summary>
+		Rating
+	}
 
 	/// <summary>
 	/// Describes how property values are displayed when multiple items are selected. For a particular property, PropertyAggregationType
@@ -127,7 +202,7 @@ namespace Vanara.PropertyStore
 		DateTime = 3,
 
 		/// <summary>
-		/// The value is displayed as an enumerated type-list. Use <see cref="IPropertyDescriptor.EnumTypeList"/> to handle this type.
+		/// The value is displayed as an enumerated type-list.
 		/// </summary>
 		Enumerated = 4,
 	}
@@ -153,7 +228,7 @@ namespace Vanara.PropertyStore
 		/// <summary>Displays percent groups.</summary>
 		Percent = 5,
 
-		/// <summary>Displays percent groups returned by <see cref="IPropertyDescriptor.EnumTypeList"/>.</summary>
+		/// <summary>Displays enumeration values.</summary>
 		Enumerated = 6,
 	}
 
@@ -257,6 +332,7 @@ namespace Vanara.PropertyStore
 		CanWrap = 0x00001000,
 	}
 
+	/// <summary>Exposes methods for reading and writing to a stream.</summary>
 	public interface IPersistAsync
 	{
 		/// <summary>Loads the values of the current property store from a stream.</summary>
@@ -285,6 +361,8 @@ namespace Vanara.PropertyStore
 		/// <value>The type of the property.</value>
 		Type PropertyType { get; }
 
+		/// <summary>Gets a list of related property names. These names should be the canonical name of another property in the store.</summary>
+		/// <value>The related property names.</value>
 		string[] RelatedPropertyNames { get; }
 
 		/// <summary>Specifies information about the property type.</summary>
@@ -294,7 +372,7 @@ namespace Vanara.PropertyStore
 	/// <summary>
 	/// Represents a set of unique <see cref="IPropertyDescriptor"/> instances that can be accessed by the descriptor's canonical name.
 	/// </summary>
-	/// <seealso cref="System.Collections.Generic.ICollection{Vanara.PropertyStore.IPropertyDescriptor}"/>
+	/// <seealso cref="System.Collections.Generic.ICollection{T}"/>
 	/// <seealso cref="Vanara.PropertyStore.IPersistAsync"/>
 	public interface IPropertyDescriptorSet : ICollection<IPropertyDescriptor>, IPersistAsync
 	{

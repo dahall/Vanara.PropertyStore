@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Vanara.PropertyStore
 {
+	/// <summary>A property descriptor set implemetnation that supports loading and persisting its values to/from a json file.</summary>
+	/// <seealso cref="System.Collections.ObjectModel.KeyedCollection{TKey, TItem}"/>
+	/// <seealso cref="Vanara.PropertyStore.IPropertyDescriptorSet"/>
 	public class PropertyDescriptorSet : KeyedCollection<string, IPropertyDescriptor>, IPropertyDescriptorSet
 	{
 		/// <summary>Loads the values of the current property store from a stream.</summary>
@@ -56,6 +59,9 @@ namespace Vanara.PropertyStore
 			return valid && !(valueType is null) ? d.PropertyType.Equals(valueType) : valid;
 		}
 
+		/// <summary>When implemented in a derived class, extracts the key from the specified element.</summary>
+		/// <param name="item">The element from which to extract the key.</param>
+		/// <returns>The key for the specified element.</returns>
 		protected override string GetKeyForItem(IPropertyDescriptor item) => item.CanonicalName;
 
 		private class JsonPropertyDescriptorSet
