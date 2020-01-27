@@ -1,0 +1,96 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "description": "A representation of the standard property descriptors available to Vanara.PropertyStore.",
+  "type": "object",
+  "properties": {
+    "propertyDescriptors": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/propertyDescriptor" }
+    }
+  },
+
+  "definitions": {
+    "idString": {
+      "type": "string",
+      "pattern": "^[a-zA-Z][\\w.]*$"
+    },
+    "propertyDescriptor": {
+      "type": "object",
+      "required": [ "name", "type" ],
+      "properties": {
+        "name": {
+          "$ref": "#/definitions/idString"
+        },
+        "type": {
+          "type": "string",
+          "description": "The assembly-qualified name of the type to get. If the type is in the currently executing assembly or in Mscorlib.dll, it is sufficient to supply the type name qualified by its namespace."
+        },
+        "typeInfo": {
+          "type": "object",
+          "properties": {
+            "canRead": {
+              "type": "boolean",
+              "default": "true"
+            },
+            "canWrite": {
+              "type": "boolean",
+              "default": "true"
+            },
+            "groupingRange": {
+              "type": "string",
+              "enum": [ "discrete", "alphanumeric", "size", "date", "timeRelative", "dynamic", "percent" ],
+              "default": "discrete"
+            },
+            "aggregationType": {
+              "type": "string",
+              "enum": [ "default", "first", "sum", "average", "dateRange", "union", "max", "min" ],
+              "default": "default"
+            }
+          }
+        },
+        "displayInfo": {
+          "type": "object",
+          "properties": {
+            "displayFormatString": {
+              "type": "string",
+              "description": "A .NET format string that can be passed to the ToString method for the property type for intended formatting."
+            },
+            "viewFlags": {
+              "type": "string",
+              "enum": [ "default", "centerAlign", "rightAlign", "beginNewGroup", "fillArea", "sortDescending", "showOnlyIfPresent", "showByDefault", "showInPrimaryList", "showInSecondaryList", "hideLabel", "hidden", "canWrap" ]
+            },
+            "drawControl": {
+              "type": "string",
+              "enum": [ "default", "multiLineText", "multiValueText", "percentBar", "progressBar", "rating", "staticText", "iconList", "booleanCheckMark" ]
+            },
+            "editControl": {
+              "type": "string",
+              "enum": [ "default", "calendar", "checkBoxDropList", "dropList", "multiLineText", "multiValueText", "rating", "text", "iconList" ]
+            },
+            "filterControl": {
+              "type": "string",
+              "enum": [ "default", "calendar", "rating" ]
+            }
+          }
+        },
+        "labelInfo": {
+          "type": "object",
+          "properties": {
+            "label": { "type": "string" },
+            "invitationText": { "type": "string" },
+            "hideLabel": {
+              "type": "boolean",
+              "default": "false"
+            }
+          }
+        },
+        "relatedPropertyNames": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/idString"
+          }
+        }
+      }
+    }
+  }
+}
