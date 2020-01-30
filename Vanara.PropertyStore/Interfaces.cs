@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 // ********* NOTE ************ / Many of these concepts come directly from the similarly named interfaces in the Windows Property System.
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 // familiar, so I decided to not completely reinvent the wheel.
 // -------------------------- */
 
-namespace Vanara.PropertyStore
+namespace Vanara
 {
 	/// <summary>Control hints for drawing the property.</summary>
 	public enum DrawControl
@@ -373,7 +374,7 @@ namespace Vanara.PropertyStore
 	/// Represents a set of unique <see cref="IPropertyDescriptor"/> instances that can be accessed by the descriptor's canonical name.
 	/// </summary>
 	/// <seealso cref="System.Collections.Generic.ICollection{T}"/>
-	/// <seealso cref="Vanara.PropertyStore.IPersistAsync"/>
+	/// <seealso cref="IPersistAsync"/>
 	public interface IPropertyDescriptorSet : ICollection<IPropertyDescriptor>, IPersistAsync
 	{
 		/// <summary>Gets the <see cref="IPropertyDescriptor"/> with the specified name.</summary>
@@ -381,6 +382,10 @@ namespace Vanara.PropertyStore
 		/// <param name="name">The name.</param>
 		/// <returns>The <see cref="IPropertyDescriptor"/> with the specified name.</returns>
 		IPropertyDescriptor this[string name] { get; }
+
+		/// <summary>Creates property descriptors by pulling public properties from a type.</summary>
+		/// <param name="type">The type to examine for properties.</param>
+		void LoadFromType(Type type);
 	}
 
 	/// <summary>Specifies information about how to display the property.</summary>
@@ -439,12 +444,28 @@ namespace Vanara.PropertyStore
 		/// </value>
 		bool ImmediateCommitModel { get; set; }
 
+		/// <summary>Gets a value indicating whether properties have been changed or added, but not committed.</summary>
+		/// <value><see langword="true" /> if there are properties to commit; otherwise, <see langword="false" />.</value>
+		bool IsDirty { get; }
+
 		/// <summary>Gets the set of property descriptors.</summary>
 		/// <value>The property descriptors.</value>
 		IPropertyDescriptorSet PropertyDescriptors { get; }
 
 		/// <summary>After a change has been made, this method saves the changes.</summary>
 		void Commit();
+
+		/// <summary>Gets the property value.</summary>
+		/// <param name="propertyName">Name of the property.</param>
+		/// <param name="defaultValue">The default value.</param>
+		/// <returns>The property value.</returns>
+		object GetPropertyValue([CallerMemberName] string propertyName = "", object defaultValue = default);
+
+		/// <summary>Sets the property value.</summary>
+		/// <param name="value">The value.</param>
+		/// <param name="propertyName">Name of the property.</param>
+		void SetPropertyValue(object value, [CallerMemberName] string propertyName = "");
+
 	}
 
 	/// <summary>Specifies information about the property type.</summary>

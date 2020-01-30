@@ -1,104 +1,33 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
 
-namespace System
-{
-	/// <summary>
-	/// Encapsulates a method that has two parameters, the last being an <c>out</c> parameter, and returns a value of the type specified by the TResult parameter.
-	/// </summary>
-	/// <typeparam name="T1">The type of the first parameter of the method that this delegate encapsulates. This type parameter is contravariant. That is, you can use either the type you specified or any type that is less derived.</typeparam>
-	/// <typeparam name="TOut">The type of the out parameter.</typeparam>
-	/// <typeparam name="TRet">The type of the return value of the method that this delegate encapsulates. This type parameter is covariant. That is, you can use either the type you specified or any type that is more derived.</typeparam>
-	/// <param name="arg1">The first parameter of the method that this delegate encapsulates.</param>
-	/// <param name="argOut">The out argument of the method that this delagate encapsulates.</param>
-	/// <returns>The return value of the method that this delegate encapsulates.</returns>
-	public delegate TRet FuncOut<in T1, TOut, out TRet>(T1 arg1, out TOut argOut);
-
-	/// <summary>
-	/// Encapsulates a method that has three parameters, the last being an <c>out</c> parameter, and returns a value of the type specified by the TResult parameter.
-	/// </summary>
-	/// <typeparam name="T1">The type of the first parameter of the method that this delegate encapsulates. This type parameter is contravariant. That is, you can use either the type you specified or any type that is less derived.</typeparam>
-	/// <typeparam name="T2">The type of the second parameter of the method that this delegate encapsulates. This type parameter is contravariant. That is, you can use either the type you specified or any type that is less derived.</typeparam>
-	/// <typeparam name="TOut">The type of the out parameter.</typeparam>
-	/// <typeparam name="TRet">The type of the return value of the method that this delegate encapsulates. This type parameter is covariant. That is, you can use either the type you specified or any type that is more derived.</typeparam>
-	/// <param name="arg1">The first parameter of the method that this delegate encapsulates.</param>
-	/// <param name="arg2">The second parameter of the method that this delegate encapsulates.</param>
-	/// <param name="argOut">The out argument of the method that this delagate encapsulates.</param>
-	/// <returns>The return value of the method that this delegate encapsulates.</returns>
-	public delegate TRet FuncOut<in T1, in T2, TOut, out TRet>(T1 arg1, T2 arg2, out TOut argOut);
-
-	/// <summary>
-	/// Encapsulates a method that has four parameters, the last being an <c>out</c> parameter, and returns a value of the type specified by the TResult parameter.
-	/// </summary>
-	/// <typeparam name="T1">The type of the first parameter of the method that this delegate encapsulates. This type parameter is contravariant. That is, you can use either the type you specified or any type that is less derived.</typeparam>
-	/// <typeparam name="T2">The type of the second parameter of the method that this delegate encapsulates. This type parameter is contravariant. That is, you can use either the type you specified or any type that is less derived.</typeparam>
-	/// <typeparam name="T3">The type of the third parameter of the method that this delegate encapsulates. This type parameter is contravariant. That is, you can use either the type you specified or any type that is less derived.</typeparam>
-	/// <typeparam name="TOut">The type of the out parameter.</typeparam>
-	/// <typeparam name="TRet">The type of the return value of the method that this delegate encapsulates. This type parameter is covariant. That is, you can use either the type you specified or any type that is more derived.</typeparam>
-	/// <param name="arg1">The first parameter of the method that this delegate encapsulates.</param>
-	/// <param name="arg2">The second parameter of the method that this delegate encapsulates.</param>
-	/// <param name="arg3">The third parameter of the method that this delegate encapsulates.</param>
-	/// <param name="argOut">The out argument of the method that this delagate encapsulates.</param>
-	/// <returns>The return value of the method that this delegate encapsulates.</returns>
-	public delegate TRet FuncOut<in T1, in T2, in T3, TOut, out TRet>(T1 arg1, T2 arg2, T3 arg3, out TOut argOut);
-
-	/// <summary>
-	/// Encapsulates a method that has five parameters, the last being an <c>out</c> parameter, and returns a value of the type specified by the TResult parameter.
-	/// </summary>
-	/// <typeparam name="T1">The type of the first parameter of the method that this delegate encapsulates. This type parameter is contravariant. That is, you can use either the type you specified or any type that is less derived.</typeparam>
-	/// <typeparam name="T2">The type of the second parameter of the method that this delegate encapsulates. This type parameter is contravariant. That is, you can use either the type you specified or any type that is less derived.</typeparam>
-	/// <typeparam name="T3">The type of the third parameter of the method that this delegate encapsulates. This type parameter is contravariant. That is, you can use either the type you specified or any type that is less derived.</typeparam>
-	/// <typeparam name="T4">The type of the fourth parameter of the method that this delegate encapsulates. This type parameter is contravariant. That is, you can use either the type you specified or any type that is less derived.</typeparam>
-	/// <typeparam name="TOut">The type of the out parameter.</typeparam>
-	/// <typeparam name="TRet">The type of the return value of the method that this delegate encapsulates. This type parameter is covariant. That is, you can use either the type you specified or any type that is more derived.</typeparam>
-	/// <param name="arg1">The first parameter of the method that this delegate encapsulates.</param>
-	/// <param name="arg2">The second parameter of the method that this delegate encapsulates.</param>
-	/// <param name="arg3">The third parameter of the method that this delegate encapsulates.</param>
-	/// <param name="arg4">The fourth parameter of the method that this delegate encapsulates.</param>
-	/// <param name="argOut">The out argument of the method that this delagate encapsulates.</param>
-	/// <returns>The return value of the method that this delegate encapsulates.</returns>
-	public delegate TRet FuncOut<in T1, in T2, in T3, in T4, TOut, out TRet>(T1 arg1, T2 arg2, T3 arg3, T4 arg4, out TOut argOut);
-
-	/// <summary>
-	/// Encapsulates a method that has six parameters, the last being an <c>out</c> parameter, and returns a value of the type specified by the TResult parameter.
-	/// </summary>
-	/// <typeparam name="T1">The type of the first parameter of the method that this delegate encapsulates. This type parameter is contravariant. That is, you can use either the type you specified or any type that is less derived.</typeparam>
-	/// <typeparam name="T2">The type of the second parameter of the method that this delegate encapsulates. This type parameter is contravariant. That is, you can use either the type you specified or any type that is less derived.</typeparam>
-	/// <typeparam name="T3">The type of the third parameter of the method that this delegate encapsulates. This type parameter is contravariant. That is, you can use either the type you specified or any type that is less derived.</typeparam>
-	/// <typeparam name="T4">The type of the fourth parameter of the method that this delegate encapsulates. This type parameter is contravariant. That is, you can use either the type you specified or any type that is less derived.</typeparam>
-	/// <typeparam name="T5">The type of the fifth parameter of the method that this delegate encapsulates. This type parameter is contravariant. That is, you can use either the type you specified or any type that is less derived.</typeparam>
-	/// <typeparam name="TOut">The type of the out parameter.</typeparam>
-	/// <typeparam name="TRet">The type of the return value of the method that this delegate encapsulates. This type parameter is covariant. That is, you can use either the type you specified or any type that is more derived.</typeparam>
-	/// <param name="arg1">The first parameter of the method that this delegate encapsulates.</param>
-	/// <param name="arg2">The second parameter of the method that this delegate encapsulates.</param>
-	/// <param name="arg3">The third parameter of the method that this delegate encapsulates.</param>
-	/// <param name="arg4">The fourth parameter of the method that this delegate encapsulates.</param>
-	/// <param name="arg5">The fifth parameter of the method that this delegate encapsulates.</param>
-	/// <param name="argOut">The out argument of the method that this delagate encapsulates.</param>
-	/// <returns>The return value of the method that this delegate encapsulates.</returns>
-	public delegate TRet FuncOut<in T1, in T2, in T3, in T4, in T5, TOut, out TRet>(T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, out TOut argOut);
-}
-
-namespace Vanara.PropertyStore
+namespace Vanara
 {
 	/// <summary>A property store (set) implemetnation that supports getting and setting passthrough and staged commits.</summary>
-	/// <seealso cref="Vanara.PropertyStore.IPropertyStore" />
+	/// <seealso cref="IPropertyStore"/>
 	public class PropertyStore : IPropertyStore
 	{
 		/// <summary>The set of descriptors.</summary>
 		protected PropertyDescriptorSet descriptors = new PropertyDescriptorSet();
+
 		/// <summary>Stores the names of any items that are dirty and must be set on <see cref="Commit"/>.</summary>
 		protected HashSet<string> dirty = new HashSet<string>();
+
 		/// <summary>Stores the current values of the properties.</summary>
-		protected Dictionary<string, object> properties = new Dictionary<string, object>();
+		protected ConcurrentDictionary<string, object> properties = new ConcurrentDictionary<string, object>();
+
 		private readonly FuncOut<string, object, bool> getFunc;
 		private readonly Action<string> resetFunc;
 		private readonly Action<string, object> setFunc;
@@ -107,7 +36,9 @@ namespace Vanara.PropertyStore
 		/// <param name="physicalGetMethod">The physical get method.</param>
 		/// <param name="physicalSetMethod">The physical set method.</param>
 		/// <param name="physicalResetMethod">The physical reset method.</param>
-		/// <param name="passthrough">if set to <see langword="true" />, does not perform a staged commit. In other words, all sets are immediately committed.</param>
+		/// <param name="passthrough">
+		/// if set to <see langword="true"/>, does not perform a staged commit. In other words, all sets are immediately committed.
+		/// </param>
 		public PropertyStore(FuncOut<string, object, bool> physicalGetMethod, Action<string, object> physicalSetMethod, Action<string> physicalResetMethod, bool passthrough = false)
 		{
 			ImmediateCommitModel = passthrough;
@@ -132,16 +63,20 @@ namespace Vanara.PropertyStore
 		/// </value>
 		public bool ImmediateCommitModel { get; set; }
 
+		/// <summary>Gets a value indicating whether properties have been changed or added, but not committed.</summary>
+		/// <value><see langword="true"/> if there are properties to commit; otherwise, <see langword="false"/>.</value>
+		public virtual bool IsDirty => dirty.Count > 0;
+
 		/// <summary>Gets or sets a value indicating whether to check for a valid descriptor before getting or setting a property value.</summary>
 		/// <value><see langword="true"/> if no descriptor validation; otherwise, <see langword="false"/>.</value>
 		public bool NoDescriptorValidation { get; set; } = false;
 
 		/// <summary>Gets the set of property descriptors.</summary>
 		/// <value>The property descriptors.</value>
-		public IPropertyDescriptorSet PropertyDescriptors => descriptors;
+		public virtual IPropertyDescriptorSet PropertyDescriptors => descriptors;
 
 		/// <summary>Gets the number of elements contained in the <see cref="ICollection{T}"/>.</summary>
-		public int Count => properties.Count;
+		public virtual int Count => properties.Count;
 
 		/// <summary>Gets a value indicating whether the <see cref="ICollection{T}"/> is read-only.</summary>
 		public virtual bool IsReadOnly => ((IDictionary<string, object>)properties).IsReadOnly;
@@ -237,11 +172,41 @@ namespace Vanara.PropertyStore
 
 		/// <summary>Loads the values of the current property store from a stream.</summary>
 		/// <param name="stream">The stream containing the serialized properties for this store.</param>
-		public virtual Task LoadAsync(Stream stream) => throw new NotImplementedException();
+		public virtual async Task LoadAsync(Stream stream)
+		{
+			await Task.Factory.StartNew(() =>
+			{
+				var ser = new BinaryFormatter { Binder = new PSSerializationBinder() };
+				var parray = (KeyValuePair<string, object>[])ser.Deserialize(stream);
+				foreach (var kv in parray)
+					SetPropertyValue(kv.Value, kv.Key);
+			});
+		}
 
 		/// <summary>Persists the values of the current property store to a stream.</summary>
 		/// <param name="stream">The writable stream that will recieve the serialized properties of this store.</param>
-		public virtual Task PersistAsync(Stream stream) => throw new NotImplementedException();
+		public virtual async Task PersistAsync(Stream stream)
+		{
+			// Before we start, ensure all values can be serialized
+			/*foreach (var kv in properties)
+			{
+				if (!(kv.Value is null) && !kv.Value.GetType().IsSerializable)
+				{
+					var conv = TypeDescriptor.GetConverter(kv.Value);
+					if (!conv.CanConvertTo(typeof(string)) && !conv.CanConvertTo(typeof(byte[])))
+						throw new InvalidOperationException($"Unable to serialize property type for {kv.Key}.");
+				}
+			}*/
+
+			// Get current list of properties. For missing ones that are R/W, grab them.
+			var props = properties.ToList();
+			foreach (var pd in descriptors)
+				if (pd.IsRW() && !props.Any(kv => kv.Key.Equals(pd.CanonicalName)) && TryGetValue(pd.CanonicalName, out var value))
+					props.Add(new KeyValuePair<string, object>(pd.CanonicalName, value));
+
+			// Write out values for binary serializer.
+			await Task.Factory.StartNew(() => new BinaryFormatter { Binder = new PSSerializationBinder() }.Serialize(stream, props.ToArray()));
+		}
 
 		//{
 		//	if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -255,19 +220,16 @@ namespace Vanara.PropertyStore
 		/// </returns>
 		public virtual bool Remove(string propertyName)
 		{
-			if (TryGetValue(propertyName, out var value))
+			OnPropertyChanging(propertyName);
+			if (properties.TryRemove(propertyName, out var value))
 			{
-				OnPropertyChanging(propertyName);
-				if (properties.Remove(propertyName))
-				{
-					if (ImmediateCommitModel)
-						resetFunc?.Invoke(propertyName);
-					else
-						dirty.Remove(propertyName);
-					OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, new KeyValuePair<string, object>(propertyName, value)));
-					OnPropertyChanged(propertyName);
-					return true;
-				}
+				if (ImmediateCommitModel)
+					resetFunc?.Invoke(propertyName);
+				else
+					dirty.Remove(propertyName);
+				OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, new KeyValuePair<string, object>(propertyName, value)));
+				OnPropertyChanged(propertyName);
+				return true;
 			}
 			return false;
 		}
@@ -383,13 +345,32 @@ namespace Vanara.PropertyStore
 		private void AddNoChecks(string propertyName, object value)
 		{
 			OnPropertyChanging(propertyName);
-			properties.Add(propertyName, value);
-			if (ImmediateCommitModel)
-				setFunc?.Invoke(propertyName, value);
-			else
-				dirty.Add(propertyName);
-			OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, new KeyValuePair<string, object>(propertyName, value)));
-			OnPropertyChanged(propertyName);
+			if (properties.TryAdd(propertyName, value))
+			{
+				if (ImmediateCommitModel)
+					setFunc?.Invoke(propertyName, value);
+				else
+					dirty.Add(propertyName);
+				OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, new KeyValuePair<string, object>(propertyName, value)));
+				OnPropertyChanged(propertyName);
+			}
+		}
+
+		private class PSSerializationBinder : SerializationBinder
+		{
+			/// <summary>When overridden in a derived class, controls the binding of a serialized object to a type.</summary>
+			/// <param name="serializedType">The type of the object the formatter creates a new instance of.</param>
+			/// <param name="assemblyName">Specifies the <see cref="T:System.Reflection.Assembly" /> name of the serialized object.</param>
+			/// <param name="typeName">Specifies the <see cref="T:System.Type" /> name of the serialized object.</param>
+			public override void BindToName(Type serializedType, out string assemblyName, out string typeName) =>
+				base.BindToName(serializedType, out assemblyName, out typeName);
+
+			/// <summary>When overridden in a derived class, controls the binding of a serialized object to a type.</summary>
+			/// <param name="assemblyName">Specifies the <see cref="T:System.Reflection.Assembly" /> name of the serialized object.</param>
+			/// <param name="typeName">Specifies the <see cref="T:System.Type" /> name of the serialized object.</param>
+			/// <returns>The type of the object the formatter creates a new instance of.</returns>
+			public override Type BindToType(string assemblyName, string typeName) =>
+				Type.GetType($"{typeName}, {assemblyName}", false, true);
 		}
 	}
 }

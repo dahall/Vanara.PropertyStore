@@ -2,7 +2,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Vanara.PropertyStore
+namespace Vanara
 {
 	/// <summary>Class that holds individual property description details.</summary>
 	public class PropertyDescriptor : IPropertyDescriptor
@@ -102,5 +102,10 @@ namespace Vanara.PropertyStore
 			[JsonConverter(typeof(EnumTypeConverter<PropertyGroupingRange>))]
 			public PropertyGroupingRange GroupingRange { get; internal set; }
 		}
+	}
+
+	internal static class PDExt
+	{
+		public static bool IsRW(this IPropertyDescriptor pd) => (pd.TypeInfo?.CanRead).GetValueOrDefault(true) && (pd.TypeInfo?.CanWrite).GetValueOrDefault(true);
 	}
 }

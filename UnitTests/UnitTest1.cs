@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using Vanara.PropertyStore;
+using Vanara;
 
 namespace UnitTests
 {
@@ -126,6 +126,35 @@ namespace UnitTests
 			TestContext.Write(str);
 		}
 
+		[Test]
+		public void PersistTest()
+		{
+			var r = new RealSysSvc();
+			var s = new MockSysSvc(r, false);
+
+			s.CurrentDirectory = Environment.SystemDirectory;
+			s.PropertyStore["MinValue"] = 1;
+			s.PropertyStore["MaxValue"] = 10;
+			s.PropertyStore["IntList"] = new List<int>() { 1, 2 };
+
+			var bytes = new byte[4096];
+			using (var mst = new MemoryStream(bytes, true))
+			{
+				s.PropertyStore.PersistAsync(mst).Wait();
+				Assert.That(mst.Length, Is.GreaterThan(0));
+				mst.Flush();
+			}
+
+			var s2 = new MockSysSvc(r, false);
+			using (var mst = new MemoryStream(bytes, false))
+				s2.PropertyStore.LoadAsync(mst).Wait();
+			Assert.That(s2.CurrentDirectory, Is.EqualTo(s.CurrentDirectory));
+			Assert.That(s2.PropertyStore["MinValue"], Is.EqualTo(s.PropertyStore["MinValue"]));
+			Assert.That(s2.PropertyStore["MaxValue"], Is.EqualTo(s.PropertyStore["MaxValue"]));
+			Assert.That(s2.PropertyStore["Ints"], Is.EquivalentTo((System.Collections.IEnumerable)s.PropertyStore["Ints"]));
+			Assert.That(s2.PropertyStore["IntList"], Is.EquivalentTo((System.Collections.IEnumerable)s.PropertyStore["IntList"]));
+		}
+
 		private class MockSysSvc : IPropertyProvider
 		{
 			private PropertyStore props;
@@ -146,7 +175,7 @@ namespace UnitTests
 
 			public string CurrentDirectory
 			{
-				get => props.TryGetValue(nameof(CurrentDirectory), out var value) ? (string)value : throw new KeyNotFoundException();
+				get => props.GetPropertyValue<string>();
 				set => props.SetPropertyValue(value);
 			}
 
@@ -189,6 +218,8 @@ namespace UnitTests
 			public int MaxValue { get; set; } = int.MaxValue;
 			public int MinValue { get; set; } = 0;
 			public DateTime Today => DateTime.Today;
+			public int[] Ints { get; set; } = new[] { 3, 2, 1 };
+			public List<int> IntList { get; set; } = new List<int>(new[] { 4, 2, 1 });
 		}
 
 		const string jsonprops = @"

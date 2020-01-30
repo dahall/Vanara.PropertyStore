@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net452;net462;net472;net48;netcoreapp3.0;netcoreapp3.1</TargetFrameworks>
     <LangVersion>latest</LangVersion>
-    <Version>0.0.1</Version>
+    <Version>0.0.6</Version>
     <Description>An interface based property store implementation that allows for passthrough gets and sets. Intended to support multiple base implementations of an object which support a single interface.</Description>
     <Authors>David Hall</Authors>
     <Company>GitHub Community</Company>
@@ -12,6 +12,7 @@
     <RepositoryType>Git</RepositoryType>
     <PackageTags>property set;property store;property;interface</PackageTags>
     <NeutralLanguage>en-US</NeutralLanguage>
+    <RootNamespace>Vanara</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">

@@ -7,11 +7,11 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Vanara.PropertyStore
+namespace Vanara
 {
 	/// <summary>A property descriptor set implemetnation that supports loading and persisting its values to/from a json file.</summary>
 	/// <seealso cref="System.Collections.ObjectModel.KeyedCollection{TKey, TItem}"/>
-	/// <seealso cref="Vanara.PropertyStore.IPropertyDescriptorSet"/>
+	/// <seealso cref="IPropertyDescriptorSet"/>
 	public class PropertyDescriptorSet : KeyedCollection<string, IPropertyDescriptor>, IPropertyDescriptorSet
 	{
 		/// <summary>Loads the values of the current property store from a stream.</summary>
